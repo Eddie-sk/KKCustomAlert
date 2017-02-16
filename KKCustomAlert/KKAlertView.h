@@ -12,12 +12,16 @@ typedef NS_ENUM(NSInteger, KKAlertViewStyle) {
     KKAlertViewStyleTextInput,
     KKAlertViewStyleCustomContent
 };
+@class KKAlertView;
 
-typedef void(^KKAlertViewBlockWithMessage)(NSString *message, NSInteger buttonIndex);
+@protocol KKAlertViewDelegate <NSObject>
+
+- (void)alertView:(KKAlertView *)alertView didClickButtonAtIndex:(NSInteger)index withMessage:(NSString *)message;
+
+@end
+
 
 @interface KKAlertView : UIView
-
-+ (void)showWithTitle:(NSString *)title block:(KKAlertViewBlockWithMessage)comp;
 
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles,...NS_REQUIRES_NIL_TERMINATION;
 
@@ -28,6 +32,10 @@ typedef void(^KKAlertViewBlockWithMessage)(NSString *message, NSInteger buttonIn
 - (UITextField *)getAlertTextField;
 
 @property (nonatomic, assign) KKAlertViewStyle alertViewStyle;
+@property (nonatomic, copy) NSString *defaultMessage;
+@property (nonatomic, copy) NSString *placeholder;
+@property (nonatomic, assign) NSInteger messageMaxSize;
+@property (nonatomic, assign) id<KKAlertViewDelegate> delegate;
 
 
 @end

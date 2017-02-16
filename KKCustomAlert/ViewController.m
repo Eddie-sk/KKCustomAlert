@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "KKAlertView.h"
+#import "KKAlertView+Block.h"
 #import <Masonry/Masonry.h>
 
 @interface ViewController ()
@@ -18,11 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看" message:@"messag安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看e" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:@"1",@"2",@"3",@"4",@"5",nil];
-//        [alert show];
-//    });
-    self.view.backgroundColor = [UIColor orangeColor];
     
 }
 
@@ -32,27 +27,24 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)test:(id)sender {
-//    [KKAlertView showWithTitle:@"捎上一句话" block:^(NSString *message, NSInteger buttonIndex) {
-//        
-//    }];
-//    return;
-    KKAlertView *alert = [[KKAlertView alloc] initWithTitle:@"安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看" message:@"messag安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚款等级阿卡丽就放大来看爱打飞机阿卡丽奥斯卡的链接发看安静地方了敬爱案例及东方拉斯大家阿里肯定就罚" cancelButtonTitle:@"cancel" otherButtonTitles:nil];
-    alert.alertViewStyle = KKAlertViewStyleCustomContent;
-    [alert show];
-    
-    
-    UIView *customView = [[UIView alloc] init];
-    
-    UIView *view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor redColor];
-    [customView addSubview:view];
-    [alert addContentView:customView];
-    [view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(customView).offset(0);
-        make.trailing.mas_equalTo(customView).offset(0);
-        make.height.equalTo(@20);
-        make.bottom.mas_equalTo(customView).offset(0);
+    [KKAlertView showWithTitle:@"test" block:^(NSString *message, NSInteger buttonIndex) {
+        
     }];
+    return;
+    
+    
+//    UIView *customView = [[UIView alloc] init];
+//    
+//    UIView *view = [[UIView alloc] init];
+//    view.backgroundColor = [UIColor redColor];
+//    [customView addSubview:view];
+//    [alert addContentView:customView];
+//    [view mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.leading.mas_equalTo(customView).offset(0);
+//        make.trailing.mas_equalTo(customView).offset(0);
+//        make.height.equalTo(@20);
+//        make.bottom.mas_equalTo(customView).offset(0);
+//    }];
 }
 
 

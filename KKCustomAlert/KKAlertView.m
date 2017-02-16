@@ -26,10 +26,6 @@ static const CGFloat kAlertButtonHeight = 45.0f;
 @property (nonatomic, copy) NSString *message;
 
 @property (nonatomic, strong) NSMutableArray *buttons;
-@property (nonatomic, copy) NSString *placeholder;
-@property (nonatomic, assign) NSInteger messageMaxSize;
-
-
 
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) UIView *alertView;
@@ -41,20 +37,10 @@ static const CGFloat kAlertButtonHeight = 45.0f;
 @property (nonatomic, strong) UILabel *textFieldMaxSize;
 @property (nonatomic, strong) NSMutableArray *buttonTitles;
 
-@property (nonatomic, copy) KKAlertViewBlockWithMessage blockWithMessage;
 
 @end
 
 @implementation KKAlertView
-
-+ (void)showWithTitle:(NSString *)title block:(void(^)(NSString *title, NSInteger buttonIndex))comp {
-    KKAlertView *alert = [[KKAlertView alloc] initWithTitle:title message:nil cancelButtonTitle:@"kCancel" otherButtonTitles: nil];
-    alert.placeholder = @"捎上一句话";
-    alert.messageMaxSize = INT_MAX;
-    alert.alertViewStyle = KKAlertViewStyleTextInput;
-    alert.blockWithMessage = comp;
-    [alert show];
-}
 
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles,... {
     self = [super initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
@@ -226,7 +212,7 @@ static const CGFloat kAlertButtonHeight = 45.0f;
         return ;
     }
     
-        
+    
     UIView *topView = self.buttonView;
     for (int i = 0; i < self.buttonTitles.count ; i++) {
         int j = (i == self.buttonTitles.count - 1) ? 0 : i + 1;
@@ -266,28 +252,39 @@ static const CGFloat kAlertButtonHeight = 45.0f;
         }];
         topView = button;
     }
-
+    
     
 }
 
 - (void)buttonActoin:(UIButton *)button {
-    if (_blockWithMessage) {
+    if ([self.delegate respondsToSelector:@selector(alertView:didClickButtonAtIndex:withMessage:)]) {
         NSString *message;
-        if (_textField.text.length > 0) {
+        if (_textField) {
             message = _textField.text;
         }
-        _blockWithMessage(message, button.tag);
+        [self.delegate alertView:self didClickButtonAtIndex:button.tag withMessage:message];
+        [self removeFromSuperview];
     }
 }
 
 #pragma mark - UITextFieldDelegate
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if ([textField.text isEqualToString:self.defaultMessage]) {
+        textField.text = nil;
+    }
+    return YES;
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if (textField.text.length >= _messageMaxSize && string.length != 0) {
+    NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    _textFieldMaxSize.text = [NSString stringWithFormat:@"%d",(int)(20 - toBeString.length)];
+    if (toBeString.length > _messageMaxSize && range.length!=1){
+        textField.text = [toBeString substringToIndex:_messageMaxSize];
+        _textFieldMaxSize.text = @"0";
         return NO;
     }
-    NSInteger currentSize = textField.text.length - ((string.length == 0) ? 1 : -string.length);
-    _textFieldMaxSize.text = [NSString stringWithFormat:@"%d",(int)(20 - currentSize)];
     
     return YES;
 }
@@ -374,7 +371,7 @@ static const CGFloat kAlertButtonHeight = 45.0f;
 - (UIView *)alertView {
     if (!_alertView) {
         _alertView = [[UIView alloc] initWithFrame:CGRectZero];
-        _alertView.backgroundColor = [UIColor whiteColor];
+        _alertView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.9];
         _alertView.layer.masksToBounds = YES;
         _alertView.layer.cornerRadius = 10;
         _alertView.userInteractionEnabled = YES;
@@ -452,6 +449,7 @@ static const CGFloat kAlertButtonHeight = 45.0f;
         
         _textField = [[UITextField alloc] initWithFrame:CGRectZero];
         _textField.borderStyle = UITextBorderStyleNone;
+        _textField.text = self.defaultMessage;
         _textField.placeholder = self.placeholder;
         [self.contentView addSubview:_textField];
         _textField.delegate = self;
@@ -478,6 +476,7 @@ static const CGFloat kAlertButtonHeight = 45.0f;
             make.leading.mas_equalTo(_textView).offset(5);
             make.top.mas_equalTo(_textView).offset(0);
             make.bottom.mas_equalTo(_textView).offset(0);
+//            make.width.equalTo(@(kScreenWidth - kAlertMargin * 2 - kAlertSubViewMargin * 2 - ((_messageMaxSize != INT_MAX) ? 30 : 0)));
             if (_messageMaxSize == INT_MAX) {
                 make.trailing.mas_equalTo(_textView).offset(0);
             }
@@ -486,7 +485,6 @@ static const CGFloat kAlertButtonHeight = 45.0f;
         if (_messageMaxSize != INT_MAX) {
             [_textFieldMaxSize mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.trailing.mas_equalTo(_textView).offset(0);
-                make.leading.equalTo(_textField.mas_trailing).offset(0);
                 make.width.equalTo(@30);
                 make.height.equalTo(@30);
                 make.centerY.mas_equalTo(_textView);

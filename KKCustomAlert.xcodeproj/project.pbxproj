@@ -15,8 +15,8 @@
 		B11988A31E5458DB00FC469D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B11988A11E5458DB00FC469D /* LaunchScreen.storyboard */; };
 		B11988AE1E5458DB00FC469D /* KKCustomAlertTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B11988AD1E5458DB00FC469D /* KKCustomAlertTests.m */; };
 		B11988B91E5458DB00FC469D /* KKCustomAlertUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B11988B81E5458DB00FC469D /* KKCustomAlertUITests.m */; };
-		B11988C81E5458E500FC469D /* KKCreateGroupMeetingAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = B11988C71E5458E500FC469D /* KKCreateGroupMeetingAlert.m */; };
 		B11988CB1E54613100FC469D /* KKAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = B11988CA1E54613100FC469D /* KKAlertView.m */; };
+		B13ADF7B1E55D283000B0D6E /* KKAlertView+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = B13ADF7A1E55D283000B0D6E /* KKAlertView+Block.m */; };
 		B1B2B10A1E5540E10008390F /* UIView+LayoutMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B2B1091E5540E10008390F /* UIView+LayoutMethods.m */; };
 		B1B2B1101E556FE70008390F /* Masonry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1B2B10F1E556FE70008390F /* Masonry.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B1B2B1131E557A7D0008390F /* KKButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B2B1121E557A7D0008390F /* KKButton.m */; };
@@ -56,10 +56,10 @@
 		B11988B41E5458DB00FC469D /* KKCustomAlertUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KKCustomAlertUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B11988B81E5458DB00FC469D /* KKCustomAlertUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KKCustomAlertUITests.m; sourceTree = "<group>"; };
 		B11988BA1E5458DB00FC469D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B11988C61E5458E500FC469D /* KKCreateGroupMeetingAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKCreateGroupMeetingAlert.h; sourceTree = "<group>"; };
-		B11988C71E5458E500FC469D /* KKCreateGroupMeetingAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKCreateGroupMeetingAlert.m; sourceTree = "<group>"; };
 		B11988C91E54613100FC469D /* KKAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKAlertView.h; sourceTree = "<group>"; };
 		B11988CA1E54613100FC469D /* KKAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKAlertView.m; sourceTree = "<group>"; };
+		B13ADF791E55D283000B0D6E /* KKAlertView+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KKAlertView+Block.h"; sourceTree = "<group>"; };
+		B13ADF7A1E55D283000B0D6E /* KKAlertView+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KKAlertView+Block.m"; sourceTree = "<group>"; };
 		B1B2B1081E5540E10008390F /* UIView+LayoutMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LayoutMethods.h"; sourceTree = "<group>"; };
 		B1B2B1091E5540E10008390F /* UIView+LayoutMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LayoutMethods.m"; sourceTree = "<group>"; };
 		B1B2B10F1E556FE70008390F /* Masonry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Masonry.framework; path = Carthage/Build/iOS/Masonry.framework; sourceTree = "<group>"; };
@@ -121,8 +121,8 @@
 				B11988971E5458DB00FC469D /* AppDelegate.m */,
 				B11988991E5458DB00FC469D /* ViewController.h */,
 				B119889A1E5458DB00FC469D /* ViewController.m */,
-				B11988C61E5458E500FC469D /* KKCreateGroupMeetingAlert.h */,
-				B11988C71E5458E500FC469D /* KKCreateGroupMeetingAlert.m */,
+				B13ADF791E55D283000B0D6E /* KKAlertView+Block.h */,
+				B13ADF7A1E55D283000B0D6E /* KKAlertView+Block.m */,
 				B11988C91E54613100FC469D /* KKAlertView.h */,
 				B11988CA1E54613100FC469D /* KKAlertView.m */,
 				B1B2B1111E557A7D0008390F /* KKButton.h */,
@@ -329,7 +329,7 @@
 				B11988981E5458DB00FC469D /* AppDelegate.m in Sources */,
 				B1B2B10A1E5540E10008390F /* UIView+LayoutMethods.m in Sources */,
 				B1B2B1131E557A7D0008390F /* KKButton.m in Sources */,
-				B11988C81E5458E500FC469D /* KKCreateGroupMeetingAlert.m in Sources */,
+				B13ADF7B1E55D283000B0D6E /* KKAlertView+Block.m in Sources */,
 				B11988951E5458DB00FC469D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
