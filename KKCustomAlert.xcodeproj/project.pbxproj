@@ -1,0 +1,602 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B11988951E5458DB00FC469D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B11988941E5458DB00FC469D /* main.m */; };
+		B11988981E5458DB00FC469D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B11988971E5458DB00FC469D /* AppDelegate.m */; };
+		B119889B1E5458DB00FC469D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B119889A1E5458DB00FC469D /* ViewController.m */; };
+		B119889E1E5458DB00FC469D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B119889C1E5458DB00FC469D /* Main.storyboard */; };
+		B11988A01E5458DB00FC469D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B119889F1E5458DB00FC469D /* Assets.xcassets */; };
+		B11988A31E5458DB00FC469D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B11988A11E5458DB00FC469D /* LaunchScreen.storyboard */; };
+		B11988AE1E5458DB00FC469D /* KKCustomAlertTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B11988AD1E5458DB00FC469D /* KKCustomAlertTests.m */; };
+		B11988B91E5458DB00FC469D /* KKCustomAlertUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B11988B81E5458DB00FC469D /* KKCustomAlertUITests.m */; };
+		B11988C81E5458E500FC469D /* KKCreateGroupMeetingAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = B11988C71E5458E500FC469D /* KKCreateGroupMeetingAlert.m */; };
+		B11988CB1E54613100FC469D /* KKAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = B11988CA1E54613100FC469D /* KKAlertView.m */; };
+		B1B2B10A1E5540E10008390F /* UIView+LayoutMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B2B1091E5540E10008390F /* UIView+LayoutMethods.m */; };
+		B1B2B1101E556FE70008390F /* Masonry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1B2B10F1E556FE70008390F /* Masonry.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		B1B2B1131E557A7D0008390F /* KKButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B2B1121E557A7D0008390F /* KKButton.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B11988AA1E5458DB00FC469D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B11988881E5458DB00FC469D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B119888F1E5458DB00FC469D;
+			remoteInfo = KKCustomAlert;
+		};
+		B11988B51E5458DB00FC469D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B11988881E5458DB00FC469D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B119888F1E5458DB00FC469D;
+			remoteInfo = KKCustomAlert;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B11988901E5458DB00FC469D /* KKCustomAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KKCustomAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B11988941E5458DB00FC469D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B11988961E5458DB00FC469D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B11988971E5458DB00FC469D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B11988991E5458DB00FC469D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		B119889A1E5458DB00FC469D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		B119889D1E5458DB00FC469D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B119889F1E5458DB00FC469D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B11988A21E5458DB00FC469D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B11988A41E5458DB00FC469D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B11988A91E5458DB00FC469D /* KKCustomAlertTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KKCustomAlertTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B11988AD1E5458DB00FC469D /* KKCustomAlertTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KKCustomAlertTests.m; sourceTree = "<group>"; };
+		B11988AF1E5458DB00FC469D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B11988B41E5458DB00FC469D /* KKCustomAlertUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KKCustomAlertUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B11988B81E5458DB00FC469D /* KKCustomAlertUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KKCustomAlertUITests.m; sourceTree = "<group>"; };
+		B11988BA1E5458DB00FC469D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B11988C61E5458E500FC469D /* KKCreateGroupMeetingAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKCreateGroupMeetingAlert.h; sourceTree = "<group>"; };
+		B11988C71E5458E500FC469D /* KKCreateGroupMeetingAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKCreateGroupMeetingAlert.m; sourceTree = "<group>"; };
+		B11988C91E54613100FC469D /* KKAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKAlertView.h; sourceTree = "<group>"; };
+		B11988CA1E54613100FC469D /* KKAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKAlertView.m; sourceTree = "<group>"; };
+		B1B2B1081E5540E10008390F /* UIView+LayoutMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LayoutMethods.h"; sourceTree = "<group>"; };
+		B1B2B1091E5540E10008390F /* UIView+LayoutMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LayoutMethods.m"; sourceTree = "<group>"; };
+		B1B2B10F1E556FE70008390F /* Masonry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Masonry.framework; path = Carthage/Build/iOS/Masonry.framework; sourceTree = "<group>"; };
+		B1B2B1111E557A7D0008390F /* KKButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKButton.h; sourceTree = "<group>"; };
+		B1B2B1121E557A7D0008390F /* KKButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKButton.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B119888D1E5458DB00FC469D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1B2B1101E556FE70008390F /* Masonry.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B11988A61E5458DB00FC469D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B11988B11E5458DB00FC469D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B11988871E5458DB00FC469D = {
+			isa = PBXGroup;
+			children = (
+				B11988921E5458DB00FC469D /* KKCustomAlert */,
+				B11988AC1E5458DB00FC469D /* KKCustomAlertTests */,
+				B11988B71E5458DB00FC469D /* KKCustomAlertUITests */,
+				B11988911E5458DB00FC469D /* Products */,
+				B11988CC1E546C8300FC469D /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B11988911E5458DB00FC469D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B11988901E5458DB00FC469D /* KKCustomAlert.app */,
+				B11988A91E5458DB00FC469D /* KKCustomAlertTests.xctest */,
+				B11988B41E5458DB00FC469D /* KKCustomAlertUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B11988921E5458DB00FC469D /* KKCustomAlert */ = {
+			isa = PBXGroup;
+			children = (
+				B11988961E5458DB00FC469D /* AppDelegate.h */,
+				B11988971E5458DB00FC469D /* AppDelegate.m */,
+				B11988991E5458DB00FC469D /* ViewController.h */,
+				B119889A1E5458DB00FC469D /* ViewController.m */,
+				B11988C61E5458E500FC469D /* KKCreateGroupMeetingAlert.h */,
+				B11988C71E5458E500FC469D /* KKCreateGroupMeetingAlert.m */,
+				B11988C91E54613100FC469D /* KKAlertView.h */,
+				B11988CA1E54613100FC469D /* KKAlertView.m */,
+				B1B2B1111E557A7D0008390F /* KKButton.h */,
+				B1B2B1121E557A7D0008390F /* KKButton.m */,
+				B1B2B1081E5540E10008390F /* UIView+LayoutMethods.h */,
+				B1B2B1091E5540E10008390F /* UIView+LayoutMethods.m */,
+				B119889C1E5458DB00FC469D /* Main.storyboard */,
+				B119889F1E5458DB00FC469D /* Assets.xcassets */,
+				B11988A11E5458DB00FC469D /* LaunchScreen.storyboard */,
+				B11988A41E5458DB00FC469D /* Info.plist */,
+				B11988931E5458DB00FC469D /* Supporting Files */,
+			);
+			path = KKCustomAlert;
+			sourceTree = "<group>";
+		};
+		B11988931E5458DB00FC469D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B11988941E5458DB00FC469D /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B11988AC1E5458DB00FC469D /* KKCustomAlertTests */ = {
+			isa = PBXGroup;
+			children = (
+				B11988AD1E5458DB00FC469D /* KKCustomAlertTests.m */,
+				B11988AF1E5458DB00FC469D /* Info.plist */,
+			);
+			path = KKCustomAlertTests;
+			sourceTree = "<group>";
+		};
+		B11988B71E5458DB00FC469D /* KKCustomAlertUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B11988B81E5458DB00FC469D /* KKCustomAlertUITests.m */,
+				B11988BA1E5458DB00FC469D /* Info.plist */,
+			);
+			path = KKCustomAlertUITests;
+			sourceTree = "<group>";
+		};
+		B11988CC1E546C8300FC469D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B1B2B10F1E556FE70008390F /* Masonry.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B119888F1E5458DB00FC469D /* KKCustomAlert */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B11988BD1E5458DB00FC469D /* Build configuration list for PBXNativeTarget "KKCustomAlert" */;
+			buildPhases = (
+				B119888C1E5458DB00FC469D /* Sources */,
+				B119888D1E5458DB00FC469D /* Frameworks */,
+				B119888E1E5458DB00FC469D /* Resources */,
+				B1B2B10E1E556F1D0008390F /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KKCustomAlert;
+			productName = KKCustomAlert;
+			productReference = B11988901E5458DB00FC469D /* KKCustomAlert.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B11988A81E5458DB00FC469D /* KKCustomAlertTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B11988C01E5458DB00FC469D /* Build configuration list for PBXNativeTarget "KKCustomAlertTests" */;
+			buildPhases = (
+				B11988A51E5458DB00FC469D /* Sources */,
+				B11988A61E5458DB00FC469D /* Frameworks */,
+				B11988A71E5458DB00FC469D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B11988AB1E5458DB00FC469D /* PBXTargetDependency */,
+			);
+			name = KKCustomAlertTests;
+			productName = KKCustomAlertTests;
+			productReference = B11988A91E5458DB00FC469D /* KKCustomAlertTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B11988B31E5458DB00FC469D /* KKCustomAlertUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B11988C31E5458DB00FC469D /* Build configuration list for PBXNativeTarget "KKCustomAlertUITests" */;
+			buildPhases = (
+				B11988B01E5458DB00FC469D /* Sources */,
+				B11988B11E5458DB00FC469D /* Frameworks */,
+				B11988B21E5458DB00FC469D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B11988B61E5458DB00FC469D /* PBXTargetDependency */,
+			);
+			name = KKCustomAlertUITests;
+			productName = KKCustomAlertUITests;
+			productReference = B11988B41E5458DB00FC469D /* KKCustomAlertUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B11988881E5458DB00FC469D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = Kook;
+				TargetAttributes = {
+					B119888F1E5458DB00FC469D = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 4C7H69P6FB;
+						ProvisioningStyle = Automatic;
+					};
+					B11988A81E5458DB00FC469D = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = B119888F1E5458DB00FC469D;
+					};
+					B11988B31E5458DB00FC469D = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = B119888F1E5458DB00FC469D;
+					};
+				};
+			};
+			buildConfigurationList = B119888B1E5458DB00FC469D /* Build configuration list for PBXProject "KKCustomAlert" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B11988871E5458DB00FC469D;
+			productRefGroup = B11988911E5458DB00FC469D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B119888F1E5458DB00FC469D /* KKCustomAlert */,
+				B11988A81E5458DB00FC469D /* KKCustomAlertTests */,
+				B11988B31E5458DB00FC469D /* KKCustomAlertUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B119888E1E5458DB00FC469D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B11988A31E5458DB00FC469D /* LaunchScreen.storyboard in Resources */,
+				B11988A01E5458DB00FC469D /* Assets.xcassets in Resources */,
+				B119889E1E5458DB00FC469D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B11988A71E5458DB00FC469D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B11988B21E5458DB00FC469D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B1B2B10E1E556F1D0008390F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Masonry.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B119888C1E5458DB00FC469D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B11988CB1E54613100FC469D /* KKAlertView.m in Sources */,
+				B119889B1E5458DB00FC469D /* ViewController.m in Sources */,
+				B11988981E5458DB00FC469D /* AppDelegate.m in Sources */,
+				B1B2B10A1E5540E10008390F /* UIView+LayoutMethods.m in Sources */,
+				B1B2B1131E557A7D0008390F /* KKButton.m in Sources */,
+				B11988C81E5458E500FC469D /* KKCreateGroupMeetingAlert.m in Sources */,
+				B11988951E5458DB00FC469D /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B11988A51E5458DB00FC469D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B11988AE1E5458DB00FC469D /* KKCustomAlertTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B11988B01E5458DB00FC469D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B11988B91E5458DB00FC469D /* KKCustomAlertUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B11988AB1E5458DB00FC469D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B119888F1E5458DB00FC469D /* KKCustomAlert */;
+			targetProxy = B11988AA1E5458DB00FC469D /* PBXContainerItemProxy */;
+		};
+		B11988B61E5458DB00FC469D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B119888F1E5458DB00FC469D /* KKCustomAlert */;
+			targetProxy = B11988B51E5458DB00FC469D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B119889C1E5458DB00FC469D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B119889D1E5458DB00FC469D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B11988A11E5458DB00FC469D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B11988A21E5458DB00FC469D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B11988BB1E5458DB00FC469D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B11988BC1E5458DB00FC469D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B11988BE1E5458DB00FC469D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4C7H69P6FB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = KKCustomAlert/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kook.KKCustomAlert;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B11988BF1E5458DB00FC469D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4C7H69P6FB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = KKCustomAlert/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kook.KKCustomAlert;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		B11988C11E5458DB00FC469D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = KKCustomAlertTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kook.KKCustomAlertTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KKCustomAlert.app/KKCustomAlert";
+			};
+			name = Debug;
+		};
+		B11988C21E5458DB00FC469D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = KKCustomAlertTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kook.KKCustomAlertTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KKCustomAlert.app/KKCustomAlert";
+			};
+			name = Release;
+		};
+		B11988C41E5458DB00FC469D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = KKCustomAlertUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kook.KKCustomAlertUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = KKCustomAlert;
+			};
+			name = Debug;
+		};
+		B11988C51E5458DB00FC469D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = KKCustomAlertUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kook.KKCustomAlertUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = KKCustomAlert;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B119888B1E5458DB00FC469D /* Build configuration list for PBXProject "KKCustomAlert" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B11988BB1E5458DB00FC469D /* Debug */,
+				B11988BC1E5458DB00FC469D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B11988BD1E5458DB00FC469D /* Build configuration list for PBXNativeTarget "KKCustomAlert" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B11988BE1E5458DB00FC469D /* Debug */,
+				B11988BF1E5458DB00FC469D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B11988C01E5458DB00FC469D /* Build configuration list for PBXNativeTarget "KKCustomAlertTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B11988C11E5458DB00FC469D /* Debug */,
+				B11988C21E5458DB00FC469D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B11988C31E5458DB00FC469D /* Build configuration list for PBXNativeTarget "KKCustomAlertUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B11988C41E5458DB00FC469D /* Debug */,
+				B11988C51E5458DB00FC469D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B11988881E5458DB00FC469D /* Project object */;
+}
