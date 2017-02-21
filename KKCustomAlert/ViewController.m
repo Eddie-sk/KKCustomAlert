@@ -7,10 +7,15 @@
 //
 
 #import "ViewController.h"
-#import "KKAlertView+Block.h"
+#import "KKDefaultAlertWithBlock.h"
+#import "KKCustomAlertWithBlock.h"
 #import <Masonry/Masonry.h>
+#import "KKAlertView.h"
 
-@interface ViewController ()
+@interface ViewController ()<UIScrollViewDelegate>
+
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIView *scrollViewContentView;
 
 @end
 
@@ -18,6 +23,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+
     
 }
 
@@ -26,26 +33,23 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)test:(id)sender {
-    [KKAlertView showWithTitle:@"test" block:^(NSString *message, NSInteger buttonIndex) {
-        
-    }];
-    return;
-    
-    
-//    UIView *customView = [[UIView alloc] init];
-//    
-//    UIView *view = [[UIView alloc] init];
-//    view.backgroundColor = [UIColor redColor];
-//    [customView addSubview:view];
-//    [alert addContentView:customView];
-//    [view mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.leading.mas_equalTo(customView).offset(0);
-//        make.trailing.mas_equalTo(customView).offset(0);
-//        make.height.equalTo(@20);
-//        make.bottom.mas_equalTo(customView).offset(0);
-//    }];
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return self.scrollViewContentView;
 }
 
+- (IBAction)test:(id)sender {
+    
+    [KKDefaultAlertWithBlock showWithTitle:@"test" message:@"testmessage" block:^(KKAlertView *alertView, NSInteger buttonIndex) {
+        
+    }];
+    
+}
+
+- (IBAction)custom:(id)sender {
+    [KKCustomAlertWithBlock showWithTitle:@"test custom alertview" block:^(KKAlertView *alertView, NSInteger buttonIndex) {
+        
+    }];
+}
 
 @end

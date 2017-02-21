@@ -33,9 +33,4 @@
     [super touchesCancelled:touches withEvent:event];
 }
 
-- (void)motionCancelled:(UIEventSubtype)motion withEvent:(UIEvent *)event{
-    [super motionCancelled:motion withEvent:event];
-    NSLog(@"%s   444",__func__);
-}
-
 @end

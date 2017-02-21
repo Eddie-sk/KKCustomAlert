@@ -11,27 +11,35 @@
 #import "UIView+LayoutMethods.h"
 #import <Masonry/Masonry.h>
 
-#define kKeyWindow [[UIApplication sharedApplication].delegate window];
-#define kScreenWidth [UIScreen mainScreen].bounds.size.width
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+#define kKeyWindow                  [[UIApplication sharedApplication].delegate window];
+#define KK_SCREEN_WIDTH             [UIScreen mainScreen].bounds.size.width
+#define KK_SCREEN_HEIGHT            [[UIScreen mainScreen] bounds].size.height
 
-static const CGFloat kAlertMargin = 50.0f;
-static const CGFloat kAlertSubViewMargin = 20.0f;
-static const CGFloat kAlertSpaceLineWidth = 0.5f;
-static const CGFloat kAlertButtonHeight = 45.0f;
+const CGFloat kAlertMargin = 50.0f;
+const CGFloat kAlertSubViewMargin = 20.0f;
+const CGFloat kAlertSpaceLineWidth = 0.5f;
+const CGFloat kAlertButtonHeight = 45.0f;
 
-@interface KKAlertView()<UITextFieldDelegate>
+@interface KKAlertView()<UITextFieldDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *message;
+@property (nonatomic, assign) CGFloat contentHeight;
 
 @property (nonatomic, strong) NSMutableArray *buttons;
 
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) UIView *alertView;
+
+//用于装载titleview和contentview
+@property (nonatomic, strong) UIScrollView *contentScrollView;
+@property (nonatomic, strong) UIView *contentScrollRootView;//内容容器
+
+@property (nonatomic, strong) UIScrollView *buttonScrollView;
+@property (nonatomic, strong) UIView *buttonScrollRootView;
+
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIView *contentView;
-@property (nonatomic, strong) UIView *buttonView;
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UILabel *textFieldMaxSize;
@@ -43,11 +51,12 @@ static const CGFloat kAlertButtonHeight = 45.0f;
 @implementation KKAlertView
 
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles,... {
-    self = [super initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    self = [super initWithFrame:CGRectMake(0, 0, KK_SCREEN_WIDTH, KK_SCREEN_HEIGHT)];
     if (self) {
         _title = title;
         _message = message;
         _messageMaxSize = INT_MAX;
+        _titleAlignment = NSTextAlignmentCenter;
         if (cancelButtonTitle.length > 0) {
             if (!_buttonTitles) {
                 _buttonTitles = [NSMutableArray array];
@@ -70,6 +79,7 @@ static const CGFloat kAlertButtonHeight = 45.0f;
             va_end(list);
         }
         [self initViews];
+        [self registerKeyboardNotification];
     }
     return self;
     
@@ -92,7 +102,7 @@ static const CGFloat kAlertButtonHeight = 45.0f;
 }
 
 - (void)updateConstraints {
-    [self.backgroundView mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [self.backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(@(0));
         make.trailing.equalTo(@(0));
         make.top.equalTo(@(0));
@@ -104,36 +114,43 @@ static const CGFloat kAlertButtonHeight = 45.0f;
         make.centerY.mas_equalTo(self);
         make.leading.mas_equalTo(@(kAlertMargin));
         make.trailing.mas_equalTo(@(-kAlertMargin));
-        make.height.lessThanOrEqualTo(@(kScreenHeight - 40));
+        make.height.mas_lessThanOrEqualTo(@(KK_SCREEN_HEIGHT - 40));
     }];
     
-    [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(self.alertView).offset(kAlertSubViewMargin);
-        make.trailing.mas_equalTo(self.alertView).offset(-kAlertSubViewMargin);
-        make.top.mas_equalTo(self.alertView).offset(kAlertSubViewMargin);
-        make.height.mas_lessThanOrEqualTo(self.alertView);
-    }];
-    
-    [self.contentView mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [self.contentScrollView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.alertView).offset(0);
         make.trailing.mas_equalTo(self.alertView).offset(0);
-        make.top.equalTo(self.titleLabel.mas_bottom).offset(kAlertSubViewMargin);
+        make.top.mas_equalTo(self.alertView).offset(0);
+        if (self.contentHeight > 0) {
+            make.height.equalTo(@(self.contentHeight));
+        } else {
+            make.height.mas_greaterThanOrEqualTo(@40);
+            make.height.mas_lessThanOrEqualTo(@(KK_SCREEN_HEIGHT - 40 - 45));
+        }
     }];
     
-    [self.buttonView mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [self.buttonScrollView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.alertView).offset(0);
         make.trailing.mas_equalTo(self.alertView).offset(0);
-        make.top.equalTo(self.contentView.mas_bottom).offset(kAlertSubViewMargin);
+        make.top.equalTo(self.contentScrollView.mas_bottom).offset(0);
         make.bottom.mas_equalTo(self.alertView).offset(0);
+        if (self.buttonTitles.count > 2) {
+            make.height.equalTo(@70);
+        } else {
+            make.height.equalTo(@45.5);
+        }
     }];
     
     
     [super updateConstraints];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    NSLog(@"");
+- (void)drawRect:(CGRect)rect {
+    [super drawRect:rect];
+    self.contentHeight = self.contentScrollRootView.height;
+    if (self.alertView.height < self.contentHeight) {
+        [self setNeedsUpdateConstraints];
+    }
 }
 
 #pragma mark - BuildUI
@@ -159,101 +176,81 @@ static const CGFloat kAlertButtonHeight = 45.0f;
 
 - (void)updateButtonView {
     if (self.buttonTitles.count == 2) {
-        UIView *spaceLineView = [[UIView alloc] init];
-        spaceLineView.backgroundColor = [UIColor blackColor];
-        [self.buttonView addSubview:spaceLineView];
-        spaceLineView.translatesAutoresizingMaskIntoConstraints = NO;
+        UIView *spaceLineView = [self createSpaceLine];
+        [self.buttonScrollRootView addSubview:spaceLineView];
         [spaceLineView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leading.mas_equalTo(self.buttonView).offset(0);
-            make.trailing.mas_equalTo(self.buttonView).offset(0);
+            make.leading.mas_equalTo(self.buttonScrollRootView).offset(0);
+            make.trailing.mas_equalTo(self.buttonScrollRootView).offset(0);
             make.height.equalTo(@0.5);
-            make.top.mas_equalTo(self.buttonView).offset(0);
+            make.top.mas_equalTo(self.buttonScrollRootView).offset(0);
         }];
-        KKButton *button = [KKButton buttonWithType:UIButtonTypeCustom];
-        [button setTitle:self.buttonTitles.firstObject forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(buttonActoin:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.8] forState:UIControlStateHighlighted];
-        button.translatesAutoresizingMaskIntoConstraints = NO;
-        button.tag = 0;
-        [self.buttonView addSubview:button];
         
-        UIView *spaceLineView1 = [[UIView alloc] init];
-        spaceLineView1.backgroundColor = [UIColor blackColor];
-        [self.buttonView addSubview:spaceLineView1];
-        KKButton *button1 = [KKButton buttonWithType:UIButtonTypeCustom];
-        [button1 setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.8] forState:UIControlStateHighlighted];
-        [button1 addTarget:self action:@selector(buttonActoin:) forControlEvents:UIControlEventTouchUpInside];
-        [button1 setTitle:self.buttonTitles[1] forState:UIControlStateNormal];
-        [button1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        button1.translatesAutoresizingMaskIntoConstraints = NO;
+        KKButton *button = [self createButtonWithTitle:self.buttonTitles.firstObject];
+        button.tag = 0;
+        [self.buttonScrollRootView addSubview:button];
+        
+        UIView *spaceLineView1 = [self createSpaceLine];
+        [self.buttonScrollRootView addSubview:spaceLineView1];
+        KKButton *button1 = [self createButtonWithTitle:self.buttonTitles[1]];
         button1.tag = 1;
-        [self.buttonView addSubview:button1];
+        [self.buttonScrollRootView addSubview:button1];
+        
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(spaceLineView.mas_bottom).offset(0);
-            make.leading.mas_equalTo(self.buttonView).offset(0);
+            make.leading.mas_equalTo(self.buttonScrollRootView).offset(0);
             make.height.equalTo(@(kAlertButtonHeight));
-            make.bottom.mas_equalTo(self.buttonView).offset(0);
+            make.bottom.mas_equalTo(self.buttonScrollRootView).offset(0);
         }];
         [spaceLineView1 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.equalTo(button.mas_trailing).offset(0);
             make.top.equalTo(spaceLineView.mas_bottom).offset(0);
-            make.bottom.mas_equalTo(self.buttonView).offset(0);
+            make.bottom.mas_equalTo(self.buttonScrollRootView).offset(0);
             make.width.equalTo(@(kAlertSpaceLineWidth));
         }];
         [button1 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.equalTo(spaceLineView1.mas_trailing).offset(0);
             make.top.equalTo(spaceLineView.mas_bottom).offset(0);
-            make.trailing.mas_equalTo(self.buttonView).offset(0);
+            make.trailing.mas_equalTo(self.buttonScrollRootView).offset(0);
             make.height.equalTo(@(kAlertButtonHeight));
-            make.bottom.mas_equalTo(self.buttonView).offset(0);
+            make.bottom.mas_equalTo(self.buttonScrollRootView).offset(0);
             make.width.equalTo(button.mas_width);
         }];
         return ;
     }
     
-    
-    UIView *topView = self.buttonView;
+        
+    UIView *topView = self.buttonScrollRootView;
     for (int i = 0; i < self.buttonTitles.count ; i++) {
         int j = (i == self.buttonTitles.count - 1) ? 0 : i + 1;
         NSString *title = self.buttonTitles[j];
-        UIView *spaceLineView = [[UIView alloc] init];
-        spaceLineView.backgroundColor = [UIColor blackColor];
-        [self.buttonView addSubview:spaceLineView];
-        spaceLineView.translatesAutoresizingMaskIntoConstraints = NO;
+        UIView *spaceLineView = [self createSpaceLine];
+        [self.buttonScrollRootView addSubview:spaceLineView];
         [spaceLineView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leading.mas_equalTo(self.buttonView).offset(0);
-            make.trailing.mas_equalTo(self.buttonView).offset(0);
+            make.leading.mas_equalTo(self.buttonScrollRootView).offset(0);
+            make.trailing.mas_equalTo(self.buttonScrollRootView).offset(0);
             make.height.equalTo(@0.5);
-            if (topView == self.buttonView) {
-                make.top.mas_equalTo(self.buttonView).offset(0);
+            if (topView == self.buttonScrollRootView) {
+                make.top.mas_equalTo(self.buttonScrollRootView).offset(0);
             } else {
                 make.top.equalTo(topView.mas_bottom).offset(0);
             }
         }];
         
-        KKButton *button = [KKButton buttonWithType:UIButtonTypeCustom];
-        [button setTitle:title forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.8] forState:UIControlStateHighlighted];
+        KKButton *button = [self createButtonWithTitle:title];
         button.tag = ((i == self.buttonTitles.count - 1)) ? 0 : i + 1;
-        [button addTarget:self action:@selector(buttonActoin:) forControlEvents:UIControlEventTouchUpInside];
+        [self.buttonScrollRootView addSubview:button];
         
-        [self.buttonView addSubview:button];
-        button.translatesAutoresizingMaskIntoConstraints = NO;
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(spaceLineView.mas_bottom).offset(0);
-            make.leading.mas_equalTo(self.buttonView).offset(0);
-            make.trailing.mas_equalTo(self.buttonView).offset(0);
+            make.leading.mas_equalTo(self.buttonScrollRootView).offset(0);
+            make.trailing.mas_equalTo(self.buttonScrollRootView).offset(0);
             make.height.equalTo(@45);
             if (i == (self.buttonTitles.count - 1)) {
-                make.bottom.mas_equalTo(self.buttonView).offset(0);
+                make.bottom.mas_equalTo(self.buttonScrollRootView).offset(0);
             }
         }];
         topView = button;
     }
-    
-    
 }
 
 - (void)buttonActoin:(UIButton *)button {
@@ -289,6 +286,67 @@ static const CGFloat kAlertButtonHeight = 45.0f;
     return YES;
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    if (scrollView == self.contentScrollView) {
+        return self.contentScrollRootView;
+    }
+    if (scrollView == self.buttonScrollView) {
+        return self.buttonScrollRootView;
+    }
+    return nil;
+}
+
+
+
+#pragma mark - Notificaion 
+
+- (void)registerKeyboardNotification {
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    
+    
+}
+
+- (void)keyboardWillShow:(NSNotification *)aNotification
+{
+    
+    NSDictionary *userInfo = [aNotification userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [aValue CGRectValue];
+    int height = keyboardRect.size.height;
+
+    [self.alertView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self);
+        make.bottom.mas_equalTo(self).offset(-height);
+        make.leading.mas_equalTo(@(kAlertMargin));
+        make.trailing.mas_equalTo(@(-kAlertMargin));
+        make.height.lessThanOrEqualTo(@(KK_SCREEN_HEIGHT - 40));
+    }];
+}
+
+
+- (void)keyboardWillHide:(NSNotification *)aNotification {
+    
+    [self.alertView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self);
+        make.centerY.mas_equalTo(self);
+        make.leading.mas_equalTo(@(kAlertMargin));
+        make.trailing.mas_equalTo(@(-kAlertMargin));
+        make.height.lessThanOrEqualTo(@(KK_SCREEN_HEIGHT - 40));
+    }];
+}
+
 #pragma mark - Public Methods
 
 - (void)show {
@@ -306,11 +364,11 @@ static const CGFloat kAlertButtonHeight = 45.0f;
 }
 
 - (void)addContentView:(UIView *)subView {
-    if (!self.alertViewStyle) return;
+    if (self.alertViewStyle != KKAlertViewStyleCustomContent) return;
     [self.contentView addSubview:subView];
     [subView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(self.contentView).offset(0);
-        make.top.mas_equalTo(self.contentView).offset(kAlertSubViewMargin);
+        make.top.mas_equalTo(self.contentView).offset(0);
         make.trailing.mas_equalTo(self.contentView).offset(0);
         make.bottom.mas_equalTo(self.contentView).offset(0);
     }];
@@ -324,6 +382,23 @@ static const CGFloat kAlertButtonHeight = 45.0f;
 }
 
 #pragma mark - PrivateMethods
+
+- (KKButton *)createButtonWithTitle:(NSString *)title {
+    KKButton *button = [KKButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.8] forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(buttonActoin:) forControlEvents:UIControlEventTouchUpInside];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    return button;
+}
+
+- (UIView *)createSpaceLine {
+    UIView *spaceLineView = [[UIView alloc] init];
+    spaceLineView.backgroundColor = [UIColor lightGrayColor];
+    spaceLineView.translatesAutoresizingMaskIntoConstraints = NO;
+    return spaceLineView;
+}
 
 - (void)updateContentView {
     
@@ -366,12 +441,56 @@ static const CGFloat kAlertButtonHeight = 45.0f;
     [self updateContentView];
 }
 
+- (void)setTitleAlignment:(NSTextAlignment)titleAlignment {
+    if (_titleAlignment != titleAlignment) {
+        self.titleLabel.textAlignment = titleAlignment;
+        [_titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.contentScrollView).offset(kAlertSubViewMargin);
+            switch (titleAlignment) {
+                case NSTextAlignmentLeft: {
+                    make.leading.mas_equalTo(self.contentScrollView).offset(kAlertSubViewMargin);
+                    make.width.equalTo(@(KK_SCREEN_WIDTH - kAlertSubViewMargin * 2 - kAlertMargin * 2));
+                }
+                    break;
+                case NSTextAlignmentRight: {
+                    make.trailing.mas_equalTo(self.contentScrollView).offset(-kAlertSubViewMargin);
+                    make.width.equalTo(@(KK_SCREEN_WIDTH - kAlertSubViewMargin * 2 - kAlertMargin * 2));
+                }
+                    break;
+                case NSTextAlignmentCenter: {
+                    make.trailing.mas_equalTo(self.contentScrollView).offset(-kAlertSubViewMargin);
+                    make.leading.mas_equalTo(self.contentScrollView).offset(kAlertSubViewMargin);
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }];
+    }
+}
+
 #pragma mark - Getter
+
+- (void)hiden {
+    [self removeFromSuperview];
+}
+
+- (UIView *)backgroundView {
+    if (!_backgroundView) {
+        _backgroundView = [[UIView alloc] init];
+        _backgroundView.backgroundColor = [[UIColor clearColor] colorWithAlphaComponent:0.3];
+        [self insertSubview:_backgroundView atIndex:0];
+        UITapGestureRecognizer *tapgest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiden)];
+        [_backgroundView addGestureRecognizer:tapgest];
+    }
+    return _backgroundView;
+}
 
 - (UIView *)alertView {
     if (!_alertView) {
         _alertView = [[UIView alloc] initWithFrame:CGRectZero];
-        _alertView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.9];
+        _alertView.backgroundColor = [UIColor clearColor];
         _alertView.layer.masksToBounds = YES;
         _alertView.layer.cornerRadius = 10;
         _alertView.userInteractionEnabled = YES;
@@ -380,24 +499,79 @@ static const CGFloat kAlertButtonHeight = 45.0f;
     return _alertView;
 }
 
-- (UIView *)backgroundView {
-    if (!_backgroundView) {
-        _backgroundView = [[UIView alloc] init];
-        _backgroundView.backgroundColor = [[UIColor clearColor] colorWithAlphaComponent:0.3];
-        [self insertSubview:_backgroundView atIndex:0];
+
+- (UIScrollView *)contentScrollView {
+    if (!_contentScrollView) {
+        _contentScrollView = [[UIScrollView alloc] init];
+        _contentScrollView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.98f];
+        _contentScrollView.delegate = self;
+        [self.alertView addSubview:_contentScrollView];
     }
-    return _backgroundView;
+    return _contentScrollView;
+}
+
+- (UIView *)contentScrollRootView {
+    if (!_contentScrollRootView) {
+        _contentScrollRootView = [[UIView alloc] init];
+        _contentScrollRootView.backgroundColor = [UIColor clearColor];
+        [self.contentScrollView addSubview:_contentScrollRootView];
+        
+        [_contentScrollRootView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.contentScrollView).offset(0);
+            make.top.mas_equalTo(self.contentScrollView).offset(0);
+            make.bottom.mas_equalTo(self.contentScrollView).offset(0);
+            make.trailing.mas_equalTo(self.contentScrollView).offset(0);
+            make.width.equalTo(@(KK_SCREEN_WIDTH - kAlertMargin * 2));
+        }];
+        
+    }
+    return _contentScrollRootView;
+}
+
+- (UIScrollView *)buttonScrollView {
+    if (!_buttonScrollView) {
+        _buttonScrollView = [[UIScrollView alloc] init];
+        _buttonScrollView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.98f];
+        _buttonScrollView.delegate = self;
+        [self.alertView addSubview:_buttonScrollView];
+    }
+    return _buttonScrollView;
+}
+
+- (UIView *)buttonScrollRootView {
+    if (!_buttonScrollRootView) {
+        _buttonScrollRootView = [[UIView alloc] init];
+        _buttonScrollRootView.backgroundColor = [UIColor clearColor];
+        [self.buttonScrollView addSubview:_buttonScrollRootView];
+        
+        [_buttonScrollRootView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.buttonScrollView).offset(0);
+            make.top.mas_equalTo(self.buttonScrollView).offset(0);
+            make.bottom.mas_equalTo(self.buttonScrollView).offset(0);
+            make.trailing.mas_equalTo(self.buttonScrollView).offset(0);
+            make.width.equalTo(@(KK_SCREEN_WIDTH - kAlertMargin * 2));
+        }];
+    }
+    return _buttonScrollRootView;
 }
 
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.font = [UIFont boldSystemFontOfSize:17.0f];
         _titleLabel.textColor = [UIColor blackColor];
+        _titleLabel.textAlignment = self.titleAlignment;
         _titleLabel.numberOfLines = 0;
-        _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self.alertView addSubview:_titleLabel];
+        [self.contentScrollRootView addSubview:_titleLabel];
+        
+        [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.contentScrollRootView).offset(kAlertSubViewMargin);
+            make.trailing.mas_equalTo(self.contentScrollRootView).offset(-kAlertSubViewMargin);
+            make.top.mas_equalTo(self.contentScrollRootView).offset(kAlertSubViewMargin);
+        }];
+        
     }
     return _titleLabel;
 }
@@ -405,24 +579,24 @@ static const CGFloat kAlertButtonHeight = 45.0f;
 - (UIView *)contentView {
     if (!_contentView) {
         _contentView = [[UIView alloc] initWithFrame:CGRectZero];
+        _contentView.backgroundColor = [UIColor clearColor];
         _contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self.alertView addSubview:_contentView];
+        [self.contentScrollRootView addSubview:_contentView];
+        
+        [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(self.contentScrollRootView).offset(0);
+            make.trailing.mas_equalTo(self.contentScrollRootView).offset(0);
+            make.top.equalTo(self.titleLabel.mas_bottom).offset(kAlertSubViewMargin);
+            make.bottom.mas_equalTo(self.contentScrollRootView).offset(0);
+        }];
     }
     return _contentView;
-}
-
-- (UIView *)buttonView {
-    if (!_buttonView) {
-        _buttonView = [[UIView alloc] initWithFrame:CGRectZero];
-        _buttonView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self.alertView addSubview:_buttonView];
-    }
-    return _buttonView;
 }
 
 - (UILabel *)contentLabel {
     if (!_contentLabel) {
         _contentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _contentLabel.backgroundColor = [UIColor clearColor];
         _contentLabel.numberOfLines = 0;
         _contentLabel.textAlignment = NSTextAlignmentCenter;
         _contentLabel.font = [UIFont systemFontOfSize:13.0f];
@@ -432,7 +606,7 @@ static const CGFloat kAlertButtonHeight = 45.0f;
             make.leading.mas_equalTo(self.contentView).offset(kAlertSubViewMargin);
             make.trailing.mas_equalTo(self.contentView).offset(-kAlertSubViewMargin);
             make.top.mas_equalTo(self.contentView).offset(0);
-            make.bottom.mas_equalTo(self.contentView).offset(0);
+            make.bottom.mas_equalTo(self.contentView).offset(-kAlertSubViewMargin);
         }];
     }
     return _contentLabel;
@@ -448,6 +622,7 @@ static const CGFloat kAlertButtonHeight = 45.0f;
         [self.contentView addSubview:_textView];
         
         _textField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _textField.backgroundColor = [UIColor clearColor];
         _textField.borderStyle = UITextBorderStyleNone;
         _textField.text = self.defaultMessage;
         _textField.placeholder = self.placeholder;
@@ -469,14 +644,14 @@ static const CGFloat kAlertButtonHeight = 45.0f;
             make.trailing.mas_equalTo(self.contentView).offset(-kAlertSubViewMargin);
             make.height.equalTo(@30);
             make.top.mas_equalTo(self.contentView).offset(0);
-            make.bottom.mas_equalTo(self.contentView).offset(0);
+            make.bottom.mas_equalTo(self.contentView).offset(-kAlertSubViewMargin);
         }];
         
         [_textField mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(_textView).offset(5);
             make.top.mas_equalTo(_textView).offset(0);
             make.bottom.mas_equalTo(_textView).offset(0);
-//            make.width.equalTo(@(kScreenWidth - kAlertMargin * 2 - kAlertSubViewMargin * 2 - ((_messageMaxSize != INT_MAX) ? 30 : 0)));
+            make.width.equalTo(@(KK_SCREEN_WIDTH - kAlertMargin * 2 - kAlertSubViewMargin * 2 - ((_messageMaxSize != INT_MAX) ? 30 : 0)));
             if (_messageMaxSize == INT_MAX) {
                 make.trailing.mas_equalTo(_textView).offset(0);
             }

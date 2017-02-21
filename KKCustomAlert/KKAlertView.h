@@ -20,6 +20,10 @@ typedef NS_ENUM(NSInteger, KKAlertViewStyle) {
 
 @end
 
+UIKIT_EXTERN const CGFloat kAlertMargin;
+UIKIT_EXTERN const CGFloat kAlertSubViewMargin;
+UIKIT_EXTERN const CGFloat kAlertSpaceLineWidth;
+UIKIT_EXTERN const CGFloat kAlertButtonHeight;
 
 @interface KKAlertView : UIView
 
@@ -36,6 +40,7 @@ typedef NS_ENUM(NSInteger, KKAlertViewStyle) {
 @property (nonatomic, copy) NSString *placeholder;
 @property (nonatomic, assign) NSInteger messageMaxSize;
 @property (nonatomic, assign) id<KKAlertViewDelegate> delegate;
+@property (nonatomic) NSTextAlignment titleAlignment;
 
 
 @end
